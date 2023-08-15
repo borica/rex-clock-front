@@ -2,9 +2,14 @@
 </script>
 
 <template>
-  <label for="email">Email</label>
-  <input id="email" v-model="text">
+  <w-card>
+    <w-form>
+      <w-input label="First name" />
+      <w-input class="mt3" label="Last name" />
 
-  <label for="password">Email</label>
-  <input id="password" v-model="password">
+      <div class="text-right mt6">
+        <w-button type="submit">Login</w-button>
+      </div>
+    </w-form>
+  </w-card>
 </template>
