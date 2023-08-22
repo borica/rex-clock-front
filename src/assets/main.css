@@ -1,1 +1,7 @@
-@import './base.css';
+@import 'tailwind.css';
+:root {
+    --merriweather: 'Merriweather Sans', sans-serif;
+    --merriweather-thin: 300;
+    --merriweather-regular: 400;
+    --merriweather-bold: 700;
+}
