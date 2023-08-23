@@ -55,16 +55,31 @@
 <script lang="ts">
 
 import { ref } from 'vue';
+import { AuthService } from '@/services/AuthService'
+import { useRouter } from 'vue-router'
+
 
 export default {
   name: 'LoginView',
   setup() {
+    const router = useRouter()
     const email = ref('')
     const password = ref('')
 
-    function login() {
-      console.log(email.value)
-      console.log(password.value)
+    async function login() {
+      if (this.email && this.password) {
+        const authService = new AuthService()
+        const { token } = await authService.login(email.value, password.value)
+        redirectLoggedUser(token)
+      }
+    }
+
+    function redirectLoggedUser (token) {
+      if (token) {
+        router.push({
+          'name': 'dashboard'
+        })
+      }
     }
 
     return {
