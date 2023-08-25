@@ -55,7 +55,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 
 import { ref } from 'vue';
 import { AuthService } from '@/services/AuthService'
@@ -63,48 +63,29 @@ import { useRouter } from 'vue-router'
 import DinoLogo from "@/components/icons/DinoLogo.vue";
 import { onBeforeMount } from 'vue'
 
-export default {
-  name: 'LoginView',
-  components: {DinoLogo},
-  setup() {
-    const router = useRouter()
-    const email = ref('')
-    const password = ref('')
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const authService = new AuthService()
 
-    onBeforeMount(() => {
-      const hasToken = sessionStorage.getItem('token') || false
-      redirectLoggedUser(hasToken)
+onBeforeMount(() => {
+  const hasToken = sessionStorage.getItem('token') || false
+  redirectLoggedUser(hasToken)
+})
+
+async function login() {
+  if (email.value && password.value) {
+    await authService.login(email.value, password.value)
+
+    redirectLoggedUser()
+  }
+}
+
+function redirectLoggedUser () {
+  if (authService.getToken()) {
+    router.push({
+      'name': 'dashboard'
     })
-
-    async function login() {
-      if (this.email && this.password) {
-        const authService = new AuthService()
-        const { token } = await authService.login(email.value, password.value)
-
-        setTokenIntoSessionStorage(token)
-        redirectLoggedUser(token)
-      }
-    }
-
-    function redirectLoggedUser (token) {
-      if (token) {
-        router.push({
-          'name': 'dashboard'
-        })
-      }
-    }
-
-    function setTokenIntoSessionStorage (token) {
-      if (token) {
-        sessionStorage.setItem('token', token)
-      }
-    }
-
-    return {
-      email,
-      password,
-      login
-    }
   }
 }
 </script>

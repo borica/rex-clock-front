@@ -12,6 +12,21 @@ export class AuthService extends BaseService{
             password: password,
         })
 
-        return await this.postRequest()
+        const response = await this.postRequest()
+
+        this.setSessionStorage(response.data.token, response.data.session)
+    }
+
+    private setSessionStorage(token: string, session: Object):void {
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('session', JSON.stringify(session))
+    }
+
+    public getToken(): object {
+        return sessionStorage.getItem('token') || null
+    }
+
+    public getSession(): object {
+        return JSON.parse(sessionStorage.getItem('session')) || null
     }
 }

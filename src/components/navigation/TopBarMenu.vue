@@ -1,8 +1,3 @@
-<script setup lang="ts">
-import DinoLogo from "@/components/icons/DinoLogo.vue";
-import AvatarLogo from "@/components/icons/AvatarLogo.vue";
-</script>
-
 <template>
   <nav class="bg-white border-gray-200 dark:bg-gray-700">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto">
@@ -25,8 +20,8 @@ import AvatarLogo from "@/components/icons/AvatarLogo.vue";
           <span class="sr-only">Open user menu</span>
         </button>
         <div class="font-medium ml-3 dark:text-white">
-          <div>Username</div>
-          <div class="text-sm text-gray-500 dark:text-gray-300">Company</div>
+          <div>{{ session.user.name }}</div>
+          <div class="text-sm text-gray-500 dark:text-gray-300">{{ session.company.name }}</div>
         </div>
         <!-- Dropdown menu -->
         <div class="z-50 hidden mb-4 mt-10 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
@@ -46,6 +41,16 @@ import AvatarLogo from "@/components/icons/AvatarLogo.vue";
     </div>
   </nav>
 </template>
+
+<script setup lang="ts">
+import DinoLogo from "@/components/icons/DinoLogo.vue";
+import AvatarLogo from "@/components/icons/AvatarLogo.vue";
+import {AuthService} from "@/services/AuthService";
+
+const authService = new AuthService()
+const session = authService.getSession()
+
+</script>
 
 <style>
   .logo-font {
