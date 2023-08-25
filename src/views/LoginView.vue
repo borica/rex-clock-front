@@ -1,7 +1,10 @@
 <template>
   <div class="bg-gray-50 h-screen w-screen flex items-center">
     <div class="h-max mx-auto flex flex-col items-center">
-      <img class="h-[150px] w-[150px] opacity-80 mb-5" src="@/assets/images/logo/dino.svg" alt="logo">
+      <DinoLogo
+        class="h-[150px] w-[150px] opacity-80 mb-5"
+        alt="logo"
+      />
       <h1 class="text-xl opacity-80 logo-font text-center mb-10">
         <span class="logo-thin">Rex</span>
         <span class="logo-bold">Clock</span>
@@ -57,19 +60,28 @@
 import { ref } from 'vue';
 import { AuthService } from '@/services/AuthService'
 import { useRouter } from 'vue-router'
-
+import DinoLogo from "@/components/icons/DinoLogo.vue";
+import { onBeforeMount } from 'vue'
 
 export default {
   name: 'LoginView',
+  components: {DinoLogo},
   setup() {
     const router = useRouter()
     const email = ref('')
     const password = ref('')
 
+    onBeforeMount(() => {
+      const hasToken = sessionStorage.getItem('token') || false
+      redirectLoggedUser(hasToken)
+    })
+
     async function login() {
       if (this.email && this.password) {
         const authService = new AuthService()
         const { token } = await authService.login(email.value, password.value)
+
+        setTokenIntoSessionStorage(token)
         redirectLoggedUser(token)
       }
     }
@@ -82,6 +94,12 @@ export default {
       }
     }
 
+    function setTokenIntoSessionStorage (token) {
+      if (token) {
+        sessionStorage.setItem('token', token)
+      }
+    }
+
     return {
       email,
       password,
@@ -91,7 +109,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .logo-font {
     font-family: var(--merriweather);
     font-size: 2.5rem;
