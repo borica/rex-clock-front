@@ -1,6 +1,6 @@
 <template>
   <TopBarMenu
-    v-if="isLoggedIn"
+    v-if="authStore.isAuth"
   />
   <RouterView />
 </template>
@@ -21,6 +21,7 @@ import {
   initPopovers,
   initTabs,
   initTooltips } from 'flowbite'
+import { useAuthStore } from "@/store/auth/AuthStore";
 
 // initialize components based on data attribute selectors
 onMounted(() => {
@@ -37,7 +38,7 @@ onMounted(() => {
   initTooltips();
 })
 
-const isLoggedIn = sessionStorage.getItem('token') || false
+const authStore = useAuthStore()
 
 </script>
 

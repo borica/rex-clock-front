@@ -48,6 +48,7 @@
             class="bg-green-950 hover:bg-green-800 w-full py-2 rounded-md text-white font-bold cursor-pointer"
             type="submit"
             value="Cadastrar"
+            @click="redirectSignup"
           >
         </div>
       </div>
@@ -73,7 +74,7 @@ onBeforeMount(() => {
   redirectLoggedUser(hasToken)
 })
 
-async function login() {
+const login = async () => {
   if (email.value && password.value) {
     await authService.login(email.value, password.value)
 
@@ -81,12 +82,18 @@ async function login() {
   }
 }
 
-function redirectLoggedUser () {
+const redirectLoggedUser = () => {
   if (authService.getToken()) {
     router.push({
       'name': 'dashboard'
     })
   }
+}
+
+const redirectSignup = () => {
+  router.push({
+    'name': 'signup'
+  })
 }
 </script>
 

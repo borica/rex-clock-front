@@ -1,4 +1,5 @@
-import {BaseService} from "@/services/BaseService";
+import { BaseService } from '@/services/BaseService'
+import { useAuthStore } from "@/store/auth/AuthStore"
 
 export class AuthService extends BaseService{
     constructor() {
@@ -6,7 +7,7 @@ export class AuthService extends BaseService{
     }
 
     public async login(email: string, password: string): Promise<any> {
-        this.apiUrl += '/auth/login'
+        this.apiUrl = this.apiUrl + '/auth/login'
         this.httpOptions.body = JSON.stringify({
             email: email,
             password: password,
@@ -14,7 +15,11 @@ export class AuthService extends BaseService{
 
         const response = await this.postRequest()
 
-        this.setSessionStorage(response.data.token, response.data.session)
+        if (response) {
+            this.setSessionStorage(response.data.token, response.data.session)
+            const authStore = useAuthStore()
+            authStore.setIsAuthUser(true)
+        }
     }
 
     private setSessionStorage(token: string, session: Object):void {
@@ -28,5 +33,9 @@ export class AuthService extends BaseService{
 
     public getSession(): object {
         return JSON.parse(sessionStorage.getItem('session')) || null
+    }
+
+    public static isAuthenticated(): boolean {
+        return sessionStorage.getItem('token') || false
     }
 }
