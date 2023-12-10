@@ -1,7 +1,8 @@
 <template>
-  <div class="container mx-auto">
+  <div class="container mt-10 mx-auto">
     <div class="grid grid-flow-row-dense grid-cols-12">
-      <div class="block col-start-3 col-span-4 max-w-sm p-6 border border-gray-200 rounded-lg shadow dark:bg-gray-200 dark:border-gray-300">
+      <div class="col-start-3 col-span-4">
+        <RegisterCard />
       </div>
       <div class="col-span-4">
         <DailyRegisterCard :daily-rows="dailyRegisters" />
@@ -12,7 +13,8 @@
 
 <script setup lang="ts">
 
-import DailyRegisterCard from "@/components/information/DailyRegisterCard.vue";
+import DailyRegisterCard from "@/components/time/DailyRegisterCard.vue";
+import RegisterCard from "@/components/time/RegisterCard.vue";
 
 const dailyRegisters = [
   {
