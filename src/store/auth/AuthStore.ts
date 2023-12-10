@@ -9,10 +9,10 @@
      state: () => ({
          isAuth: false
      } as AuthStore),
-
      actions: {
         setIsAuthUser(isAuth: boolean) {
             this.isAuth = isAuth
         }
-     }
+     },
+     persist: true
  })

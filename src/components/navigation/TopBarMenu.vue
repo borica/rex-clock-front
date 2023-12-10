@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import DinoLogo from "@/components/icons/DinoLogo.vue";
 import AvatarLogo from "@/components/icons/AvatarLogo.vue";
-import {AuthService} from "@/services/AuthService";
+import { AuthService } from "@/services/AuthService";
 
 const authService = new AuthService()
 const session = authService.getSession()
