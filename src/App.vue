@@ -40,8 +40,6 @@ onMounted(() => {
 
 const authStore = useAuthStore()
 
-onMounted(() => { console.log(authStore.isAuth) })
-
 </script>
 
 <style>

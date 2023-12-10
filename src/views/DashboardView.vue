@@ -5,7 +5,15 @@
         <RegisterCard />
       </div>
       <div class="col-span-4">
+        Component mostrando quantidade de horas no banco de horas
+      </div>
+    </div>
+    <div class="grid grid-flow-row-dense grid-cols-12">
+      <div class="col-start-3 col-span-4">
         <DailyRegisterCard :daily-rows="dailyRegisters" />
+      </div>
+      <div class="col-span-4">
+        Componente mostrando as ultimas ocorrencias
       </div>
     </div>
   </div>
